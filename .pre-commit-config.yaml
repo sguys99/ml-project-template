@@ -2,23 +2,35 @@
 # See https://pre-commit.com/hooks.html for more hooks
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v2.5.0
+    rev: v4.6.0
     hooks:
       - id: trailing-whitespace
       - id: end-of-file-fixer
       - id: mixed-line-ending
       - id: check-added-large-files
         args: ["--maxkb=30000"]
-      - id: requirements-txt-fixer
+ #     - id: requirements-txt-fixer
 
-  - repo: local
+  - repo: https://github.com/psf/black
+    rev: 24.8.0
     hooks:
-      - id: format
-        name: format
-        language: system
-        entry: make format
+      - id: black
+        args: ["--line-length=105"]
+
+  - repo: https://github.com/pycqa/isort
+    rev: 5.13.2
+    hooks:
+      - id: isort
+        args: ["--profile=black", "--filter-files"]
 
   - repo: https://github.com/asottile/add-trailing-comma
-    rev: v2.0.1
+    rev: v3.1.0
     hooks:
       - id: add-trailing-comma
+
+exclude: |
+  (?x)^(
+    uv\.lock|
+    data/|
+    \.venv/
+  )
