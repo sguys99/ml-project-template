@@ -14,3 +14,6 @@
 
 5. 개발용 의존성 포함 설치
    uv sync --all-extras --dev
+
+
+bash install.sh --dev
