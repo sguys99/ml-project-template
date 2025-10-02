@@ -2,7 +2,7 @@
 name = "flex-ml-project"
 version = "1.0.0"
 description = "flex ML project template"
-requires-python = "==3.12.9
+requires-python = "==3.12.9"
 readme = "README.md"
 authors = [
     { name = "KMYU", email = "kwangmyung@flex.team" } # Optional
