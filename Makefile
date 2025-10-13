@@ -5,13 +5,11 @@ init: ## Init env
 	uv python pin 3.12.9
 	uv venv .venv
 	uv sync
-	. .venv/bin/activate && uv pip install -e .
 
 init-dev:  ## Init dev env
 	uv python pin 3.12.9
 	uv venv .venv
 	uv sync --all-extras --dev
-	. .venv/bin/activate && uv pip install -e ".[dev]"
 	rm -f .git/hooks/pre-commit && rm -f .git/hooks/pre-commit.legacy
 	pre-commit install
 

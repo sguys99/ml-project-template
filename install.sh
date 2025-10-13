@@ -25,22 +25,12 @@ uv venv .venv
 if [[ "$DEV_MODE" == true ]]; then
   echo "Sync dependencies (all extras + dev)"
   uv sync --all-extras --dev
-else
-  echo "Sync dependencies"
-  uv sync
-fi
-
-echo "Editable install"
-if [[ "$DEV_MODE" == true ]]; then
-  . .venv/bin/activate && uv pip install -e ".[dev]"
-else
-  . .venv/bin/activate && uv pip install -e .
-fi
-
-if [[ "$DEV_MODE" == true ]]; then
   echo "Install pre-commit hooks"
   rm -f .git/hooks/pre-commit && rm -f .git/hooks/pre-commit.legacy || true
   pre-commit install
+else
+  echo "Sync dependencies"
+  uv sync
 fi
 
 echo "Done. Activate with: source .venv/bin/activate"
