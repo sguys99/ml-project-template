@@ -4,8 +4,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a machine learning project template built for Flex AI projects. It uses `uv` for Python package management and includes:
-- Core ML utilities in `src/flex_ml/`
+This is a machine learning project template. It uses `uv` for Python package management and includes:
+- Core ML utilities in `src/my_ml/`
 - Streamlit demo application in `demo/`
 - Configuration-driven architecture with YAML configs in `configs/`
 - Jupyter notebook templates in `notebooks/`
@@ -60,8 +60,7 @@ These are hardcoded for development and should be replaced with environment vari
 
 ### Pre-commit Hooks
 Pre-commit is configured with:
-- black (line-length: 105)
-- isort (black profile)
+- Ruff (formatting and linting, line-length: 105)
 - trailing-whitespace, end-of-file-fixer, mixed-line-ending
 - check-added-large-files (max 30MB)
 - requirements-txt-fixer
@@ -71,41 +70,41 @@ Pre-commit hooks run automatically on commit when using `--dev` setup.
 
 ### Manual Formatting
 ```bash
-make format  # Runs black and isort
+make format  # Runs ruff format
 ```
 
-**Important**: Always maintain line-length of 105 characters for black formatting.
+**Important**: Always maintain line-length of 105 characters for Ruff formatting.
 
 ## Architecture
 
 ### Directory Structure
 ```
-src/flex_ml/           # Main package
-  utils/               # Utility modules
-    config_loader.py   # YAML config loading
+src/my_ml/            # Main package
+  utils/              # Utility modules
+    config_loader.py  # YAML config loading
     path.py           # Path constants for project structure
     settings.py       # Random seed and reproducibility utilities
 configs/              # YAML configuration files
-  data.yaml          # Data paths configuration (commented examples)
-  feature.yaml       # Feature engineering configs
-  model.yaml         # Model configurations
-  train.yaml         # Training pipeline configs
-  configs.py         # Config loading for demo (uses AWS Secrets Manager)
+  data.yaml           # Data paths configuration (commented examples)
+  feature.yaml        # Feature engineering configs
+  model.yaml          # Model configurations
+  train.yaml          # Training pipeline configs
+  configs.py          # Config loading for demo (uses AWS Secrets Manager)
 demo/                 # Streamlit demo application
-  main.py            # Main entry point with navigation
-  page_utils.py      # Login/logout utilities
-  home/, app1/, app2/  # Application pages
+  main.py             # Main entry point with navigation
+  page_utils.py       # Login/logout utilities
+  home/, app1/, app2/ # Application pages
 data/                 # Data directory (git-ignored)
-  raw/               # Raw data
-  intermediate/      # Intermediate processing results
-  processed/         # Final processed datasets
+  raw/                # Raw data
+  intermediate/       # Intermediate processing results
+  processed/          # Final processed datasets
 notebooks/            # Jupyter notebooks
-  template.ipynb     # Notebook template with Flex branding
+  template.ipynb      # Notebook template
 ```
 
 ### Configuration System
 
-The project uses a centralized path management system ([src/flex_ml/utils/path.py](src/flex_ml/utils/path.py)) that defines all project paths relative to the repository root:
+The project uses a centralized path management system ([src/my_ml/utils/path.py](src/my_ml/utils/path.py)) that defines all project paths relative to the repository root:
 - `REPO_ROOT`: Repository root (3 levels up from utils: `Path(__file__).parents[3]`)
 - Base paths: `CONFIG_PATH`, `DATA_PATH`, `LOG_PATH`, `NOTEBOOK_PATH`, `SOURCE_PATH`, `PACKAGE_PATH`
 - Data subdirectories: `RAW_DATA_PATH`, `INTERMEDIATE_DATA_PATH`, `PROCESSED_DATA_PATH`
@@ -113,10 +112,10 @@ The project uses a centralized path management system ([src/flex_ml/utils/path.p
 
 **Important**: All paths are computed relative to REPO_ROOT, ensuring the code works regardless of where it's imported from.
 
-Use `load_config(path)` from `flex_ml.utils.config_loader` to load YAML configurations:
+Use `load_config(path)` from `my_ml.utils.config_loader` to load YAML configurations:
 ```python
-from flex_ml.utils.config_loader import load_config
-from flex_ml.utils.path import DATA_CONFIG_PATH
+from my_ml.utils.config_loader import load_config
+from my_ml.utils.path import DATA_CONFIG_PATH
 
 config = load_config(DATA_CONFIG_PATH)
 ```
@@ -135,7 +134,6 @@ The demo application ([demo/main.py](demo/main.py)) uses Streamlit's multi-page 
 ### Notebook Template Structure
 
 The Jupyter notebook template ([notebooks/template.ipynb](notebooks/template.ipynb)) includes:
-- Flex logo and branding in header
 - Author name and date fields (initial issue and last update)
 - Revision history section
 - Automatic `.env` loading with `load_dotenv()`
@@ -166,16 +164,16 @@ uv add <package>  # Adds to pyproject.toml and syncs
 1. Activate the virtual environment: `source .venv/bin/activate`
 2. Pre-commit hooks run automatically on commit (if using `--dev` setup)
 3. Configuration changes go in YAML files under `configs/`
-4. New utilities should be added to `src/flex_ml/utils/`
+4. New utilities should be added to `src/my_ml/utils/`
 5. Data files are git-ignored; only code and configs are versioned
 6. Use the notebook template for new Jupyter notebooks
-7. Import utilities using `from flex_ml.utils import ...` after environment activation
+7. Import utilities using `from my_ml.utils import ...` after environment activation
 
 ### Reproducibility
 
-Use `set_random_seed()` from [src/flex_ml/utils/settings.py](src/flex_ml/utils/settings.py) to ensure reproducible results:
+Use `set_random_seed()` from [src/my_ml/utils/settings.py](src/my_ml/utils/settings.py) to ensure reproducible results:
 ```python
-from flex_ml.utils.settings import set_random_seed
+from my_ml.utils.settings import set_random_seed
 
 set_random_seed(random_seed=42, use_torch=True)  # Sets seeds for random, numpy, and optionally torch
 ```
