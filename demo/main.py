@@ -11,7 +11,7 @@ if "login" not in st.session_state:
 
 st.set_page_config(
     page_title="flex ML Project Service Demo page",
-    page_icon=Image.open("../img/flex-logo-circle.png"),
+    page_icon=Image.open("../img/logo-circle.png"),
     layout="wide",
 )
 
@@ -67,6 +67,6 @@ else:
 
 
 with st.sidebar:
-    st.image("../img/flex-logo.png", width=200)
+    st.image("../img/logo.png", width=200)
 
 pg.run()
