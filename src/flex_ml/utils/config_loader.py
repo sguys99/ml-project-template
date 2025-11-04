@@ -1,11 +1,11 @@
-from typing import Any, Dict
+from typing import Any
 
 import yaml
 
 from flex_ml.utils.path import DATA_CONFIG_PATH
 
 
-def load_config(path: str) -> Dict[str, Any]:
+def load_config(path: str) -> dict[str, Any]:
     """Configuration loader.
 
     Description:
@@ -18,7 +18,7 @@ def load_config(path: str) -> Dict[str, Any]:
         (Dict[str, Any]): Dictionary of configuration.
     """
     config = {}
-    with open(path, "r", encoding="utf-8") as file:
+    with open(path, encoding="utf-8") as file:
         config = yaml.load(file, Loader=yaml.FullLoader)
     return config
 

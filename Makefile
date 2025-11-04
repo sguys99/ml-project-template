@@ -14,5 +14,5 @@ init-dev:  ## Init dev env
 	pre-commit install
 
 format:  ## Run formatting
-	black .
-	isort . --skip-gitignore --profile black
+	ruff check . --fix
+	ruff format .
